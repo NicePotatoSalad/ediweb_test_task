@@ -1,0 +1,24 @@
+- candidate test
+    - configuration\ == different set ups
+        - chromedriver
+        - default.yml == credentials, API
+        - geckodrvier
+    - features\
+        - step_definitions
+            - rest_tests_steps.rb
+            - web_ui_steps.rb 
+        - support\
+            - helpers\
+                - class_extentions.rb == class modifications
+                - logger.rb == logging definition
+                - rest_wrapper.rb == API modifications
+                - scenario_data.rb ==
+                - step_helper.rb == helper
+            - env.rb == aka conftest.py
+            - hoooks.rb == aka fixtures
+        - rest_api_test.feature == business explanations of the feature
+        - web_page_test.feature == business explanations of the feature
+    - .ruby-gemset == isolated environment 
+    - .ruby-version == version
+    - Gemfile == libraries and packages
+    
