@@ -1,3 +1,6 @@
+# Helper functions
+# Aka utils.py or helper.py
+
 # frozen_string_literal: true
 
 def find_user_id(users_information:, user_login:)

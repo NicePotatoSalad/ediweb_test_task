@@ -1,3 +1,7 @@
+# Contains libraries and packages that the project depends on
+# Aka requirements.txt in python
+
+
 # frozen_string_literal: true
 
 source 'https://rubygems.org'

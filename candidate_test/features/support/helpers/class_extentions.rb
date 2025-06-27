@@ -1,3 +1,6 @@
+# Extensions to Ruby class String with new methods
+# Aka utility functions like getattr() and etc
+
 
 class String
   def black

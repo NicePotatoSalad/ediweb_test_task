@@ -1,3 +1,5 @@
+# Gherkin file where desire behaviour is described from a business perspective
+
 # encoding: UTF-8
 # language: ru
 

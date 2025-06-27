@@ -1,3 +1,6 @@
+# Main environment file for Cucumber
+# Aka conftest.py + __init__.py in Python
+
 # frozen_string_literal: true
 
 require 'rest-client'

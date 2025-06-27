@@ -1,3 +1,7 @@
+# Custom class providing specific methods to an API
+# Aka class that wrap requests library adding methods like get_users(), 
+# create_user(), delete_user() and etc.
+
 # frozen_string_literal: true
 
 class RestWrapper
