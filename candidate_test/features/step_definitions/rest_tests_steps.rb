@@ -84,3 +84,28 @@ When(/^нахожу пользователя с логином (\w+\.\w+)$/) do 
 
   $logger.info("Найден пользователь #{login} с id:#{@scenario_data.users_id[login]}")
 end
+
+
+# --- UPDATE & DELETE ---
+# DELETE
+When(/^удаляю пользователя с логином (\w+\.\w+)$/) do |login|
+  # Step 1: Find the user's ID first.
+  step "нахожу пользователя с логином #{login}"
+
+  # Step 2: Get the user ID from @scenario_data (where the previous step stored it).
+  user_id_to_delete = @scenario_data.users_id[login]
+
+  # Check if we actually found an ID. If not, raise an error.
+  unless user_id_to_delete # 'unless' is Ruby for 'if not'
+    raise "Ошибка: Пользователь с логином '#{login}' не найден для удаления. Проверьте предыдущие шаги."
+  end
+
+  # Step 3: Use $rest_wrap's 'delete' method.
+  # The URL for deleting a user is often '/users/ID', so we construct it.
+  response = $rest_wrap.delete("/users/#{user_id_to_delete}")
+  $logger.info("Пользователь с логином #{login} (ID: #{user_id_to_delete}) удален. Ответ: #{response.inspect}")
+
+  # Immediately verify that the user is gone.
+  # However, for a delete operation, it's good practice.
+  step "проверяю отсутствие логина #{login} в списке пользователей"
+end
