@@ -4,6 +4,8 @@
 
 # frozen_string_literal: true
 
+require 'json'
+
 class RestWrapper
   attr_accessor :url, :login, :password
 
@@ -61,17 +63,33 @@ class RestWrapper
     send_error e
   end
 
-  private
+  private # Methods defined after 'private' can only be called from other methods within this class
 
   def send_error(exception)
+    # Print the exception object itself for detailed debugging
     puts exception.inspect
-    body = exception.response.body
-    raise_message = if body.class == String
-                      "Ошибка #{exception.response.code} с текстом #{JSON.parse(body)}"
-                    else
-                      "Ошибка #{exception}"
-                    end
-    raise raise_message
+
+    # Log the error using the global $logger
+    $logger.error("API Ошибка: #{exception.message}")
+
+    # If the exception has a 'response' (typical for RestClient errors), log more details
+    if exception.respond_to?(:response) && exception.response
+      $logger.error("Код ответа: #{exception.response.code}")
+      $logger.error("Тело ответа: #{exception.response.body}")
+      body = exception.response.body
+
+      # Attempt to parse the body as JSON, if it's a string and not empty
+      raise_message = if body.is_a?(String) && !body.empty?
+                        # Use a rescue block here just in case the body isn't valid JSON
+                        "Ошибка #{exception.response.code} с текстом #{JSON.parse(body)}" rescue "Ошибка #{exception.response.code} с текстом: #{body}"
+                      else
+                        "Ошибка #{exception.response.code} (без тела ответа)"
+                      end
+      raise raise_message # Re-raise a more descriptive error for Cucumber
+    else
+      # If no response object, just re-raise the original exception message
+      raise "Произошла неизвестная ошибка: #{exception.message}"
+    end
   end
 
   def compile_full_url(current_url)
