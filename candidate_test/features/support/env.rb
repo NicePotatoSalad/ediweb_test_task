@@ -13,7 +13,7 @@ require 'yaml' # For loading YAML configuration files
 # Make sure these paths are correct relative to env.rb
 require_relative 'helpers/rest_wrapper'
 require_relative 'helpers/logger' # This contains logger_initialize
-require_relative 'helpers/class_extensions'
+require_relative 'helpers/class_extensions.rb' 
 require_relative 'helpers/scenario_data' # This contains the ScenarioData class
 require_relative 'helpers/step_helper' # This contains find_user_id, wait_for_file_to_download, get_download_directory_path
 
