@@ -91,8 +91,9 @@ class RestWrapper
       raise "Произошла неизвестная ошибка: #{exception.message}"
     end
   end
-
+  # This method combines the base URL with the specific endpoint to create a full URL
+  # For example, if @url is 'https://api.example.com' and current_url
   def compile_full_url(current_url)
-    url + current_url
+    @url + current_url
   end
 end
