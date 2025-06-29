@@ -87,6 +87,7 @@ end
 
 
 # --- UPDATE & DELETE ---
+
 # DELETE
 When(/^удаляю пользователя с логином (\w+\.\w+)$/) do |login|
   # Step 1: Find the user's ID first.
@@ -108,4 +109,37 @@ When(/^удаляю пользователя с логином (\w+\.\w+)$/) do 
   # Immediately verify that the user is gone.
   # However, for a delete operation, it's good practice.
   step "проверяю отсутствие логина #{login} в списке пользователей"
+end
+
+# UPDATE
+When(/^изменяю параметры пользователя с логином (\w+\.\w+) на:$/) do |login, data_table|
+  # Step 1: Find the user's ID first.
+  step "нахожу пользователя с логином #{login}"
+
+  # Step 2: Get the user ID from @scenario_data.
+  user_id_to_update = @scenario_data.users_id[login]
+
+  # Check if we found an ID.
+  unless user_id_to_update
+    raise "Ошибка: Пользователь с логином '#{login}' не найден для изменения. Проверьте предыдущие шаги."
+  end
+
+  # Step 3: Get the new parameters from the data table.
+  update_data = data_table.rows_hash
+
+  # IMPORTANT: Convert 'active' from string to integer (1 or 0) if present.
+  if update_data.key?('active')
+    update_data['active'] = (update_data['active'].downcase == 'true' ? 1 : 0)
+  end
+
+  # Step 4: Use $rest_wrap's 'put' method to send the update.
+  # The URL for updating a user is often '/users/ID'.
+  response = $rest_wrap.put("/users/#{user_id_to_update}", update_data)
+  $logger.info("Параметры пользователя с логином #{login} (ID: #{user_id_to_update}) изменены. Ответ: #{response.inspect}")
+
+  # Optional: Add verification steps here if you want to confirm the changes.
+  # This would usually involve fetching the user's data again and asserting values.
+  # Example (conceptual, requires more steps):
+  # step "получаю информацию о пользователе с логином #{login}"
+  # then "пользователь с логином #{login} имеет имя \"#{update_data['name']}\" и фамилию \"#{update_data['surname']}\""
 end
