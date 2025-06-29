@@ -22,3 +22,18 @@ Before do |_scenario|
   # Create the directory fresh, ensuring it's empty and ready for downloads
   FileUtils.mkdir_p(download_directory) # Create directory and any parent directories if they don't exist
 end
+
+After do |scenario|
+  # Check if any users were created in this scenario and if $rest_wrap is available
+  if @scenario_data.created_user_ids && $rest_wrap
+    @scenario_data.created_user_ids.each do |user_id|
+      begin
+        # Attempt to delete each created user
+        $rest_wrap.delete("/users/#{user_id}")
+        $logger.info("Удален пользователь с ID: #{user_id} после сценария.")
+      rescue StandardError => e
+        $logger.warn("Не удалось удалить пользователя с ID #{user_id}: #{e.message}")
+      end
+    end
+  end
+end
