@@ -46,8 +46,14 @@ def wait_for_file_to_download(file_path, timeout_seconds = Capybara.default_max_
 
 rescue Timeout::Error # Catch the timeout error if the file doesn't appear in time
   raise "Ошибка: Файл '#{File.basename(file_path)}' не был загружен в '#{File.dirname(file_path)}' в течение #{timeout_seconds} секунд."
-  
+
 rescue StandardError => e # Catch any other unexpected errors
   $logger.error("Произошла ошибка при ожидании загрузки файла: #{e.message}")
   raise e
+end
+
+# Getting a consistent path
+def get_download_directory_path
+  # This path should match what you configured in env.rb for Capybara downloads.
+  File.expand_path('features/tmp/', Dir.pwd) # Dir.pwd is current working directory
 end
