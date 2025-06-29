@@ -3,6 +3,9 @@
 
 # frozen_string_literal: true
 
+require 'timeout' # We need this for Timeout.timeout
+require 'fileutils' # We need this for FileUtils operations
+
 def find_user_id(users_information:, user_login:)
   users_id = []
   users_information.each do |user|
@@ -18,3 +21,4 @@ def find_user_id(users_information:, user_login:)
 
   users_id.first
 end
+
