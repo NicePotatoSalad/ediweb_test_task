@@ -79,3 +79,17 @@ When(/^проверяю, что файл находится в директор�
   expect(File.exist?(file_path)).to be true # 'be true' is RSpec matcher for boolean true
   $logger.info("Файл '#{@scenario_data.expected_download_filename}' найден в директории загрузок: #{download_dir}")
 end
+
+When(/^проверяю, что имя скачанного файла совпадает с именем, указанным на сайте$/) do
+  # If we reached this step, it means a file with the expected name was found.
+
+  download_dir = get_download_directory_path
+  actual_full_path = File.join(download_dir, @scenario_data.expected_download_filename)
+
+  # It's good to re-check existence just in case
+  expect(File.exist?(actual_full_path)).to be true
+
+  # Compare the actual filename with the expected one.
+  expect(File.basename(actual_full_path)).to eq(@scenario_data.expected_download_filename) # 'eq' is RSpec matcher for equality
+  $logger.info("Имя скачанного файла '#{File.basename(actual_full_path)}' совпадает с именем, указанным на сайте: '#{@scenario_data.expected_download_filename}'.")
+end
