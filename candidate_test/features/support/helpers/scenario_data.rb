@@ -1,3 +1,5 @@
+# No idea
+
 # frozen_string_literal: true
 
 class ScenarioData

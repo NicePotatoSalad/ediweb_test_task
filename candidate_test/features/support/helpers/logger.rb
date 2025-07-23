@@ -1,3 +1,6 @@
+# Defines how logging is set up
+# Aka logger_config.py
+
 def logger_initialize
   $logger = Logger.new(STDOUT)
   $logger.formatter = proc do |severity, datetime, _progname, msg|

@@ -1,3 +1,5 @@
+# Gherkin file where desire behaviour is described from a business perspective
+
 # encoding: UTF-8
 # language: ru
 
@@ -20,3 +22,12 @@
       И кликаю по строке выдачи с адресом https://cucumber.io
 
       Тогда я должен увидеть текст на странице "Thousands of teams worldwide trust Cucumber to deliver better products, faster."
+
+    # --- NEW SCENARIO FOR DOWNLOAD ---
+    Сценарий: Скачивание и проверка последнего стабильного релиза Ruby
+
+      Когда захожу на страницу "https://www.ruby-lang.org/ru/"
+      И перехожу на вкладку "Загрузить" # "Загрузить" ли TODO: проверить
+      Тогда скачиваю последний стабильный релиз
+      И проверяю, что файл находится в директории загрузок
+      И проверяю, что имя скачанного файла совпадает с именем, указанным на сайте
