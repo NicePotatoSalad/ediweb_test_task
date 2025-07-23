@@ -24,7 +24,7 @@ def browser_setup(browser = 'firefox')
   when 'chrome'
     Capybara.register_driver :chrome do |app|
       # Path to your chromedriver executable
-      Selenium::WebDriver::Chrome.driver_path = 'configuration/chromedriver'
+      Selenium::WebDriver::Chrome.driver_path = 'configuration/chromedriver.exe'
       # Define the directory where downloads should go
       # This MUST match the path used in your step_helper and hooks.rb
       download_directory = File.expand_path('features/tmp/', Dir.pwd)
@@ -51,8 +51,8 @@ def browser_setup(browser = 'firefox')
   else 
     Capybara.register_driver :firefox_driver do |app|
       profile = Selenium::WebDriver::Firefox::Profile.new
-      Selenium::WebDriver::Firefox.driver_path = 'configuration/geckodriver' # Path to your geckodriver executable
-      
+      Selenium::WebDriver::Firefox.driver_path = 'configuration/geckodriver.exe' # Path to your geckodriver executable
+    
       # Define the directory where downloads should go for Firefox
       download_directory = File.expand_path('features/tmp/', Dir.pwd)
 
